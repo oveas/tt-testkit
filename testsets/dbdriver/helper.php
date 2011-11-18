@@ -4,7 +4,6 @@
  * \file
  * This file defines some helper functions for the DbDriver testset
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \version $Id: helper.php,v 1.2 2011-10-16 11:11:44 oscar Exp $
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.

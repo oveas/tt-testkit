@@ -3,7 +3,6 @@
  * \file
  * This file defines the testcase that does all table alterings
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \version $Id: case.alter.php,v 1.4 2011-10-28 09:32:44 oscar Exp $
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.

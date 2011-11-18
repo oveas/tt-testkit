@@ -3,7 +3,6 @@
  * \file
  * This file defines the first testcase for the Hierarchical Dataset
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \version $Id: case.first.php,v 1.3 2011-10-28 09:32:44 oscar Exp $
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.

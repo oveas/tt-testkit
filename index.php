@@ -3,7 +3,6 @@
  * \file
  * This is the entry point for the OWL-PHP Testkit
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \version $Id: index.php,v 1.3 2011-10-28 09:32:42 oscar Exp $
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.
@@ -76,6 +75,8 @@ OWLloader::getClass('OWLrundown.php', OWL_ROOT);
  *
  * For a description of the testset class, refer to the documentation of the TestSet base class. Testcases should
  * implement the TestCase base class.
+ *
+ * OTK can be downloaded from <a href="https://github.com/oveas/otk">GitHub</a>
  *
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider

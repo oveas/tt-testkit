@@ -4,7 +4,6 @@
  * \ingroup OTK_UI_LAYER
  * This file creates the area to show the testresults
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \version $Id: testresults.php,v 1.4 2011-10-16 11:11:45 oscar Exp $
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.

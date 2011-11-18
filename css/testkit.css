@@ -3,18 +3,7 @@
  * \file
  * Style sheet for the OWL Testkit
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \version $Id: testkit.css,v 1.2 2011-05-26 12:26:30 oscar Exp $
  */
-/*
-Naam				HTML		R		G		B
-Oveas Donkergroen	275324		39		83		36
-Oveas Groen			43903f		67		144		63
-Oveas Lichtgroen	5fcb59		222		243		221
-Oveas Pastelgroen	def3dd		222		243		221
-Oveas Grijsgroen	86a985		134		169		133
-Oveas Rood			be533f		190		83		63
-Oveas Geel			d7df77		215		223		119
-*/
 body {
 	background-color : #def3dd;
 }

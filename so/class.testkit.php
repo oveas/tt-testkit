@@ -3,7 +3,6 @@
  * \file
  * This file loads all testsets
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \version $Id: class.testkit.php,v 1.3 2011-10-16 11:11:46 oscar Exp $
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.

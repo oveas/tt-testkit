@@ -4,7 +4,6 @@
  * This file loads the OWL Test Kit application
  * \ingroup OTK_LIBRARY
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \version $Id: otk.applic.loader.php,v 1.3 2011-10-16 11:11:45 oscar Exp $
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.

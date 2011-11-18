@@ -3,7 +3,6 @@
  * \file
  * \ingroup OTK_LIBRARY
  * This file defines the text for all labels in the default language
- * \version $Id: otk.labels.php,v 1.2 2011-10-16 11:11:45 oscar Exp $
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.
