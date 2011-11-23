@@ -48,7 +48,7 @@ define ('OWL_ROOT', '/var/www/owl-php/src');
 define ('APPL_CODE', 'OTK');
 
 //! OWL TestKit configuration file
-define ('APP_CONFIG_FILE', '/var/www/owl-php/owltestkit/testkit.cfg');
+define ('APP_CONFIG_FILE', '/var/www/owl-php/otk/testkit.cfg');
 
 //! We wanna use timers in the test application.
 define ('OWL_TIMERS_ENABLED', true);

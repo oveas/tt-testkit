@@ -27,7 +27,7 @@ define ('OWL_ROOT', '/var/www/owl-php/src');
 
 require (OWL_ROOT . '/OWLinstaller.php');
 
-$_id = OWLinstaller::installApplication('OTK', 'OWLTestKit', 'v0.1', 'Testapplication for OWL-PHP', 'https://github.com/oveas/otk', 'Oscar van Eijk', 'LGPL');
+$_id = OWLinstaller::installApplication('OTK', 'otk', 'OWLTestKit', 'v0.1', 'Testapplication for OWL-PHP', 'https://github.com/oveas/otk', 'Oscar van Eijk', 'LGPL');
 
 OWLinstaller::addConfig($_id, 'general', 'debug', 16711935);
 OWLinstaller::addConfig($_id, 'database', 'prefix', 'otk_', true);
