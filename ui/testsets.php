@@ -44,7 +44,7 @@ class TestsetsArea extends ContentArea
 		// Create a new form
 		$form = new Form(
 			  array(
-				 'application' => 'testkit'
+				 'application' => 'OWL TestKit'
 				,'include_path' => 'OTK_BO'
 				,'class_file' => 'otk'
 				,'class_name' => 'OTK'

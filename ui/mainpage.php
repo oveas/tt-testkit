@@ -42,7 +42,7 @@ $_d = $_form->get(OWL_DISPATCHER_NAME);
 if ($_form->getStatus() === FORM_NOVALUE || !$_d) {
 	// Create the body container
 	$GLOBALS['OTK']['BodyContainer'] = new Container('div', '', array('class' => 'bodyContainer'));
-	$dispatcher->dispatch('owltestkit#OTK_BO#otk#OTK#selectTestCases');
+	$dispatcher->dispatch('OWL TestKit#OTK_BO#otk#OTK#selectTestCases');
 	// Add the containers to the document
 	$document->addToContent($GLOBALS['OTK']['HeaderContainer']);
 	$document->addToContent($GLOBALS['OTK']['BodyContainer']);
