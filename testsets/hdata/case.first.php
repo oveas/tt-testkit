@@ -89,6 +89,7 @@ class OTKHdata_First implements TestCase
 
 
 		$_scheme->createScheme($this->tablename);
+		$_scheme->setEngine('MyISAM'); // TODO - This test won't work with InnoDB on MySQL otherwise
 		$_scheme->defineScheme($_table);
 		$_scheme->defineIndex($_index);
 		if ($_scheme->scheme() <= OWL_SUCCESS) {
