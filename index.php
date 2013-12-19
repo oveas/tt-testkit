@@ -42,13 +42,10 @@ error_reporting(E_ALL | E_STRICT);
  * @{
  */
 //! Toplevel where OWL can be found
-define ('OWL_ROOT', '/var/www/owl-php/src');
-
-//! Acronym for this application
-define ('APPL_CODE', 'OTK');
+define ('OWL_ROOT', '/var/www/owl-php');
 
 //! OWL TestKit configuration file
-define ('APP_CONFIG_FILE', '/var/www/owl-php/otk/testkit.cfg');
+define ('APP_CONFIG_FILE', '/var/www/otk/testkit.cfg');
 
 //! We wanna use timers in the test application.
 define ('OWL_TIMERS_ENABLED', true);
@@ -56,8 +53,9 @@ define ('OWL_TIMERS_ENABLED', true);
 
 // Load OWL
 require (OWL_ROOT . '/OWLloader.php');
-// Load the application and register with the OWL framework
-require (APPL_LIBRARY . '/otk.applic.loader.php');
+
+// Load myself
+OWLloader::loadApplication('OTK');
 
 // Load the testsets
 require (OTK_SO . '/class.testkit.php');
@@ -79,7 +77,7 @@ OWLloader::getClass('OWLrundown.php', OWL_ROOT);
  * OTK can be downloaded from <a href="https://github.com/oveas/otk">GitHub</a>
  *
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
+ * \copyright{2011-2013} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.
  *

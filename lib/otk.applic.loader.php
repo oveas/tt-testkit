@@ -4,7 +4,7 @@
  * This file loads the OWL Test Kit application
  * \ingroup OTK_LIBRARY
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
+ * \copyright{2011-2013} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of OTK.
  *
@@ -25,7 +25,7 @@
 /*
  * Register this class and all status codes
  */
-Register::registerApp (APPL_NAME, 0x01000000);
+Register::registerApp (OWLloader::getCurrentAppName(), 0xff000001);
 
 // Set up the label translations
 Register::registerLabels();
@@ -37,24 +37,24 @@ Register::registerLabels();
  * @{
  */
 //! OWL Test Kit business objects
-define ('OTK_BO', APPL_SITE_TOP . '/bo');
+define ('OTK_BO', OWLloader::getCurrentAppUrl() . '/bo');
 
 //! OWL Test Kit storage objects
-define ('OTK_SO', APPL_SITE_TOP . '/so');
+define ('OTK_SO', OWLloader::getCurrentAppUrl() . '/so');
 
 //! OWL Test Kitw layout objects
-define ('OTK_UI', APPL_SITE_TOP . '/ui');
+define ('OTK_UI', OWLloader::getCurrentAppUrl() . '/ui');
 
 //! OWL Test Kit stylesheets
-define ('OTK_CSS', APPL_SITE_TOP . '/css');
+define ('OTK_CSS', OWLloader::getCurrentAppUrl() . '/css');
 
 //! Location of all testsets
-define ('OTK_TESTSETS', APPL_SITE_TOP . '/testsets');
+define ('OTK_TESTSETS', OWLloader::getCurrentAppUrl() . '/testsets');
 //! @}
 
 if (!OWLloader::getClass('otkuser', OTK_BO)) {
 	trigger_error('Error loading classfile OTKUser from '. OTK_BO, E_USER_ERROR);
 }
-$GLOBALS['OTK']['user'] = OTKUser::getReference();
 
+OTKUser::getReference();
 OWLloader::getClass('otkhelpers', OTK_BO);

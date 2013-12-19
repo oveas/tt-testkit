@@ -88,6 +88,7 @@ class TestKit
 		if (!file_exists(OTK_TESTSETS . '/' . $name . '/testset.php')) {
 			return (null);
 		}
+
 		require (OTK_TESTSETS . '/' . $name . '/testset.php');
 		$testSet = $this->getClassName($name);
 		if (!class_exists($testSet)) {

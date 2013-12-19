@@ -40,7 +40,7 @@
 	 */
 	public function __construct()
 	{
-		parent::init();
+		parent::init(__FILE__, __LINE__);
 		$this->testKit = OWL::factory('testkit', OTK_SO);
 	}
 

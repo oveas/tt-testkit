@@ -23,7 +23,7 @@
  */
 
 // Toplevel where OWL can be found
-define ('OWL_ROOT', '/var/www/owl-php/src');
+define ('OWL_ROOT', '/var/www/owl-php');
 
 require (OWL_ROOT . '/OWLinstaller.php');
 

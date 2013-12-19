@@ -48,7 +48,7 @@ class OTKHdata_Last implements TestCase
 	}
 
 	public function performTest ()
-	{
+	{//return 'Disabled the remove';
 		$returnCodes = array();
 
 		// Step 1; remove the complete tree
@@ -77,7 +77,7 @@ class OTKHdata_Last implements TestCase
 	}
 
 	public function cleanupTest ()
-	{//return 'Disbled the drop';
+	{//return 'Disabled the drop';
 		$db = OWL::factory('dbhandler');
 		$dbId = $db->getResource();
 		if ($db->getDriver()->dbDropTable($dbId, $db->tablename($this->tablename, true))) {

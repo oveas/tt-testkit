@@ -56,7 +56,7 @@ class OTKTranslations_Messages implements TestCase
 		$this->details = '';
 		$this->messages = array();
 		$this->statusCodes = array(
-			 'statusSet' => array() // All codes used in setStatus
+			 'statusSet' => array() // All codes used in setStatus and OWL::stat
 			,'statusReg' => array() // All codes defined in registerCode
 		);
 
@@ -133,14 +133,20 @@ class OTKTranslations_Messages implements TestCase
 		$lineCounter = 0;
 		while ($line = fgets($fHandle, 1024)) {
 			$lineCounter++;
-			if (preg_match("/->setStatus\s*\(([A-Z_]*?)[,\ \)]/i", $line, $matches)) {
+			if (preg_match("/->setStatus\s*\((__FILE__)?\s*,?\s*(__LINE__)?\s*,?\s*([A-Z_]*?)[,\ \)]/i", $line, $matches)) {
 				// TODO This check also scans outcommented lines or blocks
-				$this->statusCodes['statusSet'][$matches[1]] = array($file, $lineCounter);
+				// TODO Might as well check for __FILE__ and __LINE__ here
+				$this->statusCodes['statusSet'][$matches[3]] = array($file, $lineCounter);
+			}
+			if (preg_match("/OWL::stat\s*\((__FILE__)?\s*,?\s*(__LINE__)?\s*,?\s*([A-Z_]*?)[,\ \)]/i", $line, $matches)) {
+				// TODO This check also scans outcommented lines or blocks
+				// TODO Might as well check for __FILE__ and __LINE__ here
+				$this->statusCodes['statusSet'][$matches[3]] = array($file, $lineCounter);
 			}
 			if (preg_match("/^\s*Register::registerCode\s*\('([A-Z_]*?)'\)/i", $line, $matches)) {
 				$this->statusCodes['statusReg'][$matches[1]] = 1;
 				if (!array_key_exists($matches[1], $this->messages)) {
-					$this->returnCodes[] = array(OTK_RESULT_FAIL, "Message code $matches[1] is not registered in file $file on line $lineCounter");
+					$this->returnCodes[] = array(OTK_RESULT_FAIL, "Message code $matches[1] does not appear in a message in file $file on line $lineCounter");
 				} elseif ($this->messages[$matches[1]] == '') {
 					$this->returnCodes[] = array(OTK_RESULT_WARNING, "Message code $matches[1] has no text in file $file on line $lineCounter");
 				}
