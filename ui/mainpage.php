@@ -53,6 +53,7 @@ if ($_form->getStatus() === FORM_NOVALUE || !$_d) {
 	// don't have to wait 'til all tests are completed
 	$document->addToContent($GLOBALS['TTK']['HeaderContainer']);
 	OutputHandler::outputRaw($document->showElement());
+	OutputHandler::outputNow();
 	$dispatcher->dispatch(); // Run the tests. All output will be echoed immediatly
 }
 

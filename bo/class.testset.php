@@ -148,7 +148,7 @@ abstract class TestSet
 	}
 
 	/**
-	 * Scan the testset directory for all files holeing either testcases (<em>case.&lt;name&gt;.php</em>)
+	 * Scan the testset directory for all files holding either testcases (<em>case.&lt;name&gt;.php</em>)
 	 * or helper functions or class (<em>helper.php</em>).
 	 * \param[in] $location Directory to scan
 	 * \author Oscar van Eijk, Oveas Functionality Provider
@@ -287,6 +287,7 @@ abstract class TestSet
 		);
 		if (($_area = TTloader::getArea('testresults', TTK_UI, $results)) !== null) {
 			OutputHandler::outputRaw($_area->getArea());
+			OutputHandler::outputNow();
 		}
 	}
 }
