@@ -3,7 +3,7 @@
  * \file
  * This is the entry point for the Terra-Terra Testkit
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
+ * \copyright{2011-2014} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of TTK.
  *
@@ -66,7 +66,7 @@ require (TTK_UI . '/mainpage.php');
 TTloader::getClass('TTrundown.php', TT_ROOT);
 /**
  * \mainpage
- * The TT TestKit (TTK) is an <a href="http://tt.oveas.com/docs/terra-terra/index.html">TT</a> application that has been written for automated testing of the TT
+ * The Terra-Terra TestKit (TTK) is a <a href="http://docs.terra-terra.org/terra-terra/index.html">Terra-Terra</a> application that has been written for automated testing of the Terra-Terra
  * functionalitaty.
  * TTK contains a simple framework and testsets, which can be easily added by creating a new testset directory
  * and the required files (testset.php and one ore more testcases in case.*.php)
@@ -74,10 +74,10 @@ TTloader::getClass('TTrundown.php', TT_ROOT);
  * For a description of the testset class, refer to the documentation of the TestSet base class. Testcases should
  * implement the TestCase base class.
  *
- * TTK can be downloaded from <a href="https://github.com/oveas/otk">GitHub</a>
+ * TTK can be downloaded from <a href="https://github.com/oveas/tt-testkit">GitHub</a>
  *
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \copyright{2011-2013} Oscar van Eijk, Oveas Functionality Provider
+ * \copyright{2011-2014} Oscar van Eijk, Oveas Functionality Provider
  * \license
  * This file is part of TTK.
  *

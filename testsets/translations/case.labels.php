@@ -82,7 +82,7 @@ class TTKTranslations_Labels implements TestCase
 		while (($line = fgets($mFile, 1024)) !== false) {
 			// TODO I'ld prefer to use backrefs, but somehow the following won't find matches:
 //			if (preg_match("/\s+,?\s+('|\")(.*?)(\1)\s+=>\s+('|\")(.*?)(\4)/i", $line, $match)) {
-			if (preg_match("/\s+,?\s+('|\")(.*?)('|\")\s+=>\s+('|\")(.*?)('|\")/i", $line, $match)) {
+			if (preg_match("/\s+,?\s*('|\")(.*?)('|\")\s+=>\s+('|\")(.*?)('|\")/i", $line, $match)) {
 				$this->labels[$match[2]] = $match[5];
 			}
 		}
