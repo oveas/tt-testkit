@@ -5,27 +5,27 @@
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
-if (!OWLloader::getClass('testset', OTK_BO)) {
+if (!TTloader::getClass('testset', TTK_BO)) {
 	trigger_error('Error loading the TestSet baseclass', E_USER_ERROR);
 }
 
 /**
- * \ingroup OTK_SO
+ * \ingroup TTK_SO
  * Singleton class that loads all testsets
  * \brief Testset loader
  * \author Oscar van Eijk, Oveas Functionality Provider
@@ -51,11 +51,11 @@ class TestKit
 	 */
 	private function __construct()
 	{
-		if ($dH = opendir(OTK_TESTSETS)) {
+		if ($dH = opendir(TTK_TESTSETS)) {
 			while (($fName = readdir($dH)) !== false) {
-				if ($fName != '.' && $fName != '..' && is_dir(OTK_TESTSETS . '/' . $fName)) {
+				if ($fName != '.' && $fName != '..' && is_dir(TTK_TESTSETS . '/' . $fName)) {
 					if ($this->loadTestSet($fName) === false) {
-						// TODO some signalling. Are we gonna use OWL for that?
+						// TODO some signalling. Are we gonna use TT for that?
 					}
 				}
 			}
@@ -85,11 +85,11 @@ class TestKit
 	 */
 	private function loadTestSet ($name)
 	{
-		if (!file_exists(OTK_TESTSETS . '/' . $name . '/testset.php')) {
+		if (!file_exists(TTK_TESTSETS . '/' . $name . '/testset.php')) {
 			return (null);
 		}
 
-		require (OTK_TESTSETS . '/' . $name . '/testset.php');
+		require (TTK_TESTSETS . '/' . $name . '/testset.php');
 		$testSet = $this->getClassName($name);
 		if (!class_exists($testSet)) {
 			return (false);
@@ -119,7 +119,7 @@ class TestKit
 	{
 		$_class = $this->getClassName($testSet);
 		$set = new $_class();
-		$set->loadTestcases (OTK_TESTSETS.'/'.strtolower($testSet));
+		$set->loadTestcases (TTK_TESTSETS.'/'.strtolower($testSet));
 		$set->performTests();
 		flush(); // Send buffer now
 	}
@@ -132,6 +132,6 @@ class TestKit
 	 */
 	private function getClassName ($setName)
 	{
-		return 'OTK' . ucfirst($setName);
+		return 'TTK' . ucfirst($setName);
 	}
 }

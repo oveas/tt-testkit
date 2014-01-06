@@ -5,30 +5,30 @@
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
 /**
- * \ingroup OTK_TESTSETS
+ * \ingroup TTK_TESTSETS
  * Check all labels that are called for translation but not in the label file
  * \brief Check labels
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \version Jun 7, 2011 -- O van Eijk -- initial version
  */
-class OTKTranslations_Labels implements TestCase
+class TTKTranslations_Labels implements TestCase
 {
 	// List of messages
 	private $labels;
@@ -57,9 +57,9 @@ class OTKTranslations_Labels implements TestCase
 		$this->labels = array();
 		$this->checked = array();
 
-		$this->topLocation = OTKTranslations_topLocation();
-		$this->libLocation = OTKTranslations_libLocation();
-		$this->applCode = OTKTranslations_applicCode();
+		$this->topLocation = TTKTranslations_topLocation();
+		$this->libLocation = TTKTranslations_libLocation();
+		$this->applCode = TTKTranslations_applicCode();
 	}
 
 	public function prepareTest ()
@@ -88,7 +88,7 @@ class OTKTranslations_Labels implements TestCase
 		}
 		fclose($mFile);
 
-		return OTK_RESULT_SUCCESS;
+		return TTK_RESULT_SUCCESS;
 	}
 
 	public function performTest ()
@@ -97,7 +97,7 @@ class OTKTranslations_Labels implements TestCase
 
 		$this->checkDirectory ($this->topLocation);
 		if (count($this->returnCodes) == 0) {
-			$this->returnCodes[] = array(OTK_RESULT_SUCCESS, "All labels have been translated");
+			$this->returnCodes[] = array(TTK_RESULT_SUCCESS, "All labels have been translated");
 		}
 		return $this->returnCodes;
 	}
@@ -105,7 +105,7 @@ class OTKTranslations_Labels implements TestCase
 	private function checkDirectory ($dir)
 	{
 		if (($dHandle = opendir($dir)) === false) {
-			$this->returnCodes[] = array(OTK_RESULT_FAIL, "Error opening directory $dir for read");
+			$this->returnCodes[] = array(TTK_RESULT_FAIL, "Error opening directory $dir for read");
 			return;
 		}
 		while ($file = readdir($dHandle)) {
@@ -124,9 +124,9 @@ class OTKTranslations_Labels implements TestCase
 
 	private function checkFile ($file)
 	{
-		// TODO Existing OWL labels are not checked when checking a different application
+		// TODO Existing TT labels are not checked when checking a different application
 		if (($fHandle = fopen($file, 'r')) === false) {
-			$this->returnCodes[] = array(OTK_RESULT_WARNING, "Error opening file $file for read");
+			$this->returnCodes[] = array(TTK_RESULT_WARNING, "Error opening file $file for read");
 			return;
 		}
 		$lineCounter = 0;
@@ -135,7 +135,7 @@ class OTKTranslations_Labels implements TestCase
 			if (preg_match("/(::translate|->trn)\s*\('(.*?)'\)/i", $line, $matches)) {
 				if (!in_array($matches[2], $this->checked)) {
 					if (!array_key_exists($matches[2], $this->labels)) {
-						$this->returnCodes[] = array(OTK_RESULT_WARNING, "Label <u><em>$matches[2]</em></u> has no translation in file $file on line $lineCounter");
+						$this->returnCodes[] = array(TTK_RESULT_WARNING, "Label <u><em>$matches[2]</em></u> has no translation in file $file on line $lineCounter");
 					}
 					$this->checked[] = $matches[2];
 				}
@@ -145,7 +145,7 @@ class OTKTranslations_Labels implements TestCase
 
 	public function cleanupTest ()
 	{
-		return OTK_RESULT_NONE;
+		return TTK_RESULT_NONE;
 	}
 
 	public function getDetails ()

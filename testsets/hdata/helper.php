@@ -1,25 +1,25 @@
 <?php
 /**
- * \ingroup OTK_TESTSETS
+ * \ingroup TTK_TESTSETS
  * \file
  * This file defines some helper functions for the HData testset
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
 /**
@@ -28,7 +28,7 @@
  * \return Table name without prefix
  * \author Oscar van Eijk, Oveas Functionality Provider
  */
-function OTKHdata_tableName ()
+function TTKHdata_tableName ()
 {
 	return 'hdata';
 }
@@ -41,13 +41,13 @@ function OTKHdata_tableName ()
  * \return True on success, false on error, null when no data data was found
  * \author Oscar van Eijk, Oveas Functionality Provider
  */
-function OTKHdata_getData (&$data, $rootNode = null)
+function TTKHdata_getData (&$data, $rootNode = null)
 {
 	$db = DbHandler::getInstance();
-	$_q = 'SELECT * FROM ' . $db->tablename(OTKHdata_tableName());
+	$_q = 'SELECT * FROM ' . $db->tablename(TTKHdata_tableName());
 	if ($rootNode !== null) {
-		$_q .= ' WHERE ' . $db->getDriver()->dbQuote('lval') . ' >= (SELECT ' . $db->getDriver()->dbQuote('lval') . ' FROM ' . $db->tablename(OTKHdata_tableName()) . ' WHERE ' . $db->getDriver()->dbQuote('node') . " = '$rootNode')"
-			. ' AND  ' . $db->getDriver()->dbQuote('rval') . ' <= (SELECT ' . $db->getDriver()->dbQuote('rval') . ' FROM ' . $db->tablename(OTKHdata_tableName()) . ' WHERE ' . $db->getDriver()->dbQuote('node') . " = '$rootNode')";
+		$_q .= ' WHERE ' . $db->getDriver()->dbQuote('lval') . ' >= (SELECT ' . $db->getDriver()->dbQuote('lval') . ' FROM ' . $db->tablename(TTKHdata_tableName()) . ' WHERE ' . $db->getDriver()->dbQuote('node') . " = '$rootNode')"
+			. ' AND  ' . $db->getDriver()->dbQuote('rval') . ' <= (SELECT ' . $db->getDriver()->dbQuote('rval') . ' FROM ' . $db->tablename(TTKHdata_tableName()) . ' WHERE ' . $db->getDriver()->dbQuote('node') . " = '$rootNode')";
 	}
 	$_q .= ' ORDER BY ' . $db->getDriver()->dbQuote('lval');
 	$db->read(DBHANDLE_DATA, $_data, $_q, __LINE__, __FILE__);

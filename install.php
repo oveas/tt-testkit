@@ -1,39 +1,39 @@
 <?php
 /**
  * \file
- * This is installer for the OWL Testkit
- * \ingroup OTK_ADMIN
+ * This is installer for the TT Testkit
+ * \ingroup TTK_ADMIN
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
+ * \copyright{2011-2013} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
-// Toplevel where OWL can be found
-define ('OWL_ROOT', '/var/www/owl-php');
+// Toplevel where TT can be found
+define ('TT_ROOT', '/var/www/terra-terra');
 
-require (OWL_ROOT . '/OWLinstaller.php');
+require (TT_ROOT . '/TTinstaller.php');
 
-$_id = OWLinstaller::installApplication('OTK', 'otk', 'OWL TestKit', 'v0.1', 'Testapplication for OWL-PHP', 'https://github.com/oveas/otk', 'Oscar van Eijk', 'LGPL');
+$_id = TTinstaller::installApplication('TTK', 'ttk', 'Terra-Terra TestKit', 'v0.2', 'Testapplication for Terra-Terra', 'https://github.com/oveas/tt-testkit', 'Oscar van Eijk', 'LGPL');
 
-OWLinstaller::addConfig($_id, 'general', 'debug', 16711935);
-OWLinstaller::addConfig($_id, 'database', 'prefix', 'otk_', true);
-OWLinstaller::addConfig($_id, 'general', 'js_signal', true);
+TTinstaller::addConfig($_id, 'general', 'debug', 16711935);
+TTinstaller::addConfig($_id, 'database', 'prefix', 'ttk_', true);
+TTinstaller::addConfig($_id, 'general', 'js_signal', true);
 
-OWLinstaller::addRights($_id
+TTinstaller::addRights($_id
 	,array(
 		 'createtestset'=> 'Can create new testsets'
 		,'createtestcase'=> 'Can create new testcases in an existing testset'
@@ -41,35 +41,35 @@ OWLinstaller::addRights($_id
 	)
 );
 
-OWLinstaller::addGroups($_id
+TTinstaller::addGroups($_id
 	,array(
-		 'OTK admin' => 'OWL Testkit Administrators'
-		,'OTK Developers' => 'OWL developers'
-		,'OTK Testers' => 'OWL testers'
+		 'TTK admin' => 'TT Testkit Administrators'
+		,'TTK Developers' => 'TT developers'
+		,'TTK Testers' => 'TT testers'
 	)
 );
-OWLinstaller::addGroupRights($_id
-	,'OTK admin'
+TTinstaller::addGroupRights($_id
+	,'TTK admin'
 	,array(
 		 'createtestset'
 		,'createtestcase'
 		,'executetest'
 	)
 );
-OWLinstaller::addGroupRights($_id
-	,'OTK Developers'
+TTinstaller::addGroupRights($_id
+	,'TTK Developers'
 	,array(
 		 'createtestcase'
 		,'executetest'
 	)
 );
-OWLinstaller::addGroupRights($_id
-	,'OTK Testers'
+TTinstaller::addGroupRights($_id
+	,'TTK Testers'
 	,array(
 		 'executetest'
 	)
 );
 
-OWLinstaller::enableApplication($_id);
+TTinstaller::enableApplication($_id);
 
-OWLloader::getClass('OWLrundown.php', OWL_ROOT);
+TTloader::getClass('TTrundown.php', TT_ROOT);

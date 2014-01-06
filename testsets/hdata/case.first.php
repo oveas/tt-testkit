@@ -5,30 +5,30 @@
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
 /**
- * \ingroup OTK_TESTSETS
+ * \ingroup TTK_TESTSETS
  * This testcase creates a database table that will be used in all HData tests
  * \brief HData Testcase
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \version May 23, 2011 -- O van Eijk -- initial version
  */
-class OTKHdata_First implements TestCase
+class TTKHdata_First implements TestCase
 {
 	// Name of the temporary database table that will be used in this testcase
 	private $tablename;
@@ -38,13 +38,13 @@ class OTKHdata_First implements TestCase
 
 	public function __construct()
 	{
-		$this->tablename = OTKHdata_tableName();
+		$this->tablename = TTKHdata_tableName();
 		$this->details = '';
 	}
 
 	public function prepareTest ()
 	{
-		$_scheme = OWL::factory('schemehandler');
+		$_scheme = TT::factory('schemehandler');
 		$_table = array(
 			 'id' => array (
 				 'type' => 'INT'
@@ -92,11 +92,11 @@ class OTKHdata_First implements TestCase
 		$_scheme->setEngine('MyISAM'); // TODO - This test won't work with InnoDB on MySQL otherwise
 		$_scheme->defineScheme($_table);
 		$_scheme->defineIndex($_index);
-		if ($_scheme->scheme() <= OWL_SUCCESS) {
+		if ($_scheme->scheme() <= TT_SUCCESS) {
 			$_scheme->reset();
-			return OTK_RESULT_SUCCESS;
+			return TTK_RESULT_SUCCESS;
 		} else {
-			$_scheme->signal(OWL_WARNING, $msg);
+			$_scheme->signal(TT_WARNING, $msg);
 			$_scheme->reset();
 			return $msg;
 		}
@@ -108,18 +108,18 @@ class OTKHdata_First implements TestCase
 
 		// Step 1; create a rootnode
 		$hd = new HDataHandler();
-		$hd->setTablename(OTKHdata_tableName());
+		$hd->setTablename(TTKHdata_tableName());
 		$hd->setLeft('lval');
 		$hd->setRight('rval');
 		if ($hd->insertNode(array('node' => 'Musical instruments'), array('field' => 'node')) === false) {
-			$returnCodes[] = array(OTK_RESULT_FAIL, 'Inserting root node failed: ' . $hd->getLastWarning());
+			$returnCodes[] = array(TTK_RESULT_FAIL, 'Inserting root node failed: ' . $hd->getLastWarning());
 		} else {
-			switch (OTKHdata_getData($data)) {
+			switch (TTKHdata_getData($data)) {
 				case null:
-					$returnCodes[] = array(OTK_RESULT_FAIL, 'No root node inserted - table empty');
+					$returnCodes[] = array(TTK_RESULT_FAIL, 'No root node inserted - table empty');
 					break;
 				case false:
-					$returnCodes[] = array(OTK_RESULT_FAIL, 'Failure while retrieving the results: ' . $data);
+					$returnCodes[] = array(TTK_RESULT_FAIL, 'Failure while retrieving the results: ' . $data);
 					break;
 				case true:
 					$_expectedResult = array(
@@ -131,9 +131,9 @@ class OTKHdata_First implements TestCase
 											)
 										);
 					if ($data === $_expectedResult) {
-						$returnCodes[] = array(OTK_RESULT_SUCCESS, 'Successfully inserted root node "Musical instruments"');
+						$returnCodes[] = array(TTK_RESULT_SUCCESS, 'Successfully inserted root node "Musical instruments"');
 					} else {
-						$returnCodes[] = array(OTK_RESULT_FAIL, 'Inserted root node was not as expected');
+						$returnCodes[] = array(TTK_RESULT_FAIL, 'Inserted root node was not as expected');
 						$this->details .= '<p>The values of the root node differed from the exected result. '
 							. 'The expected result was: <br/><pre>' . print_r($_expectedResult, 1) . '</pre><br/>'
 							. 'The actual result was: <br/><pre>' . print_r($data, 1) . '</pre></p>';
@@ -146,7 +146,7 @@ class OTKHdata_First implements TestCase
 
 	public function cleanupTest ()
 	{
-		return OTK_RESULT_NONE;
+		return TTK_RESULT_NONE;
 	}
 
 	public function getDetails ()

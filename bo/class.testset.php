@@ -5,23 +5,23 @@
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
-OWLloader::getClass('testcase', OTK_BO);
+TTloader::getClass('testcase', TTK_BO);
 
 /**
  * \defgroup Test_Results Test result code
@@ -29,26 +29,26 @@ OWLloader::getClass('testcase', OTK_BO);
  * @{
  */
 //! Testcase ended with a failure
-define ('OTK_RESULT_FAIL'		, 0);
+define ('TTK_RESULT_FAIL'		, 0);
 
 //! The testscase ended successfully
-define ('OTK_RESULT_SUCCESS'	, 1);
+define ('TTK_RESULT_SUCCESS'	, 1);
 
 //! The testcase ended with a warning
-define ('OTK_RESULT_WARNING'	, 2);
+define ('TTK_RESULT_WARNING'	, 2);
 
 //! The testcase was skipped as a result of an earlier failure or warning
-define ('OTK_RESULT_SKIPPED'	, 3);
+define ('TTK_RESULT_SKIPPED'	, 3);
 
 //! The teststep had nothing to do, ignore it. This code is reserved for prepareTest() and cleanupTest()
-define ('OTK_RESULT_NONE'		, 3);
+define ('TTK_RESULT_NONE'		, 3);
 // @}
 
 /**
- * \ingroup OTK_BO
+ * \ingroup TTK_BO
  * Baseclass that defines the testsets.
- * Classes that derive from this baseclass must have the name <em>OTK&lt;Location&gt;</em>, where
- * 'location' is the name of the subdirectory in OTK_TESTSETS. The filename must be <em>testset.php</em>.
+ * Classes that derive from this baseclass must have the name <em>TTK&lt;Location&gt;</em>, where
+ * 'location' is the name of the subdirectory in TTK_TESTSETS. The filename must be <em>testset.php</em>.
  *
  * The classes only need to reimplement the static getDescription() method, all other required methods
  * are in this baseclass.
@@ -71,7 +71,7 @@ define ('OTK_RESULT_NONE'		, 3);
 abstract class TestSet
 {
 	/**
-	 * Name of the testset. It will be taken from the classname (without the leading 'OTK')
+	 * Name of the testset. It will be taken from the classname (without the leading 'TTK')
 	 */
 	private $setName;
 
@@ -122,7 +122,7 @@ abstract class TestSet
 	public function __construct()
 	{
 		$this->setName = get_class($this);
-		$this->setName = str_replace('OTK', '', $this->setName);
+		$this->setName = str_replace('TTK', '', $this->setName);
 		$this->testCases = array();
 		$this->testResults = array();
 		$this->helper = null;
@@ -177,7 +177,7 @@ abstract class TestSet
 	 */
 	public function performTests ()
 	{
-		OWLTimers::startTimer($this->setName);
+		TTTimers::startTimer($this->setName);
 		if ($this->helper !== null) {
 			require $this->helper;
 		}
@@ -192,7 +192,7 @@ abstract class TestSet
 		if (array_key_exists('last', $this->testCases)) {
 			$this->doTest ('last', $this->testCases['last']);
 		}
-		OWLTimers::stopTimer($this->setName);
+		TTTimers::stopTimer($this->setName);
 		$this->showTestResults();
 	}
 
@@ -206,52 +206,52 @@ abstract class TestSet
 	{
 		require $file;
 		$this->testResults[$name] = array();
-		$_class = 'OTK' . ucfirst($this->setName) . '_' . ucfirst($name);
+		$_class = 'TTK' . ucfirst($this->setName) . '_' . ucfirst($name);
 		$_case = new $_class();
 
-		if (($_r = $_case->prepareTest()) === OTK_RESULT_SUCCESS) {
-			$this->testResults[$name][] = array(OTK_RESULT_SUCCESS, 'Test preparation completed successfully');
+		if (($_r = $_case->prepareTest()) === TTK_RESULT_SUCCESS) {
+			$this->testResults[$name][] = array(TTK_RESULT_SUCCESS, 'Test preparation completed successfully');
 			$this->succeeded++;
-		} elseif ($_r === OTK_RESULT_NONE) {
-			$this->testResults[$name][] = array(OTK_RESULT_NONE, '--- will be ignored ---');
+		} elseif ($_r === TTK_RESULT_NONE) {
+			$this->testResults[$name][] = array(TTK_RESULT_NONE, '--- will be ignored ---');
 		} else {
-			$this->testResults[$name][] = array(OTK_RESULT_FAIL, $_r);
+			$this->testResults[$name][] = array(TTK_RESULT_FAIL, $_r);
 			$this->errors++;
 			return; // Can't go on...
 		}
 
 		$_r = $_case->performTest();
 		if (!is_array($_r)) {
-			$this->testResults[$name][] = array(OTK_RESULT_WARNING, 'Testcase returned an invalid result - not an array!');
+			$this->testResults[$name][] = array(TTK_RESULT_WARNING, 'Testcase returned an invalid result - not an array!');
 			$this->warnings++;
 		} else {
 			$_steps = 1;
 			foreach ($_r as $_step) {
 				if (!is_array($_step)) {
-					$this->testResults[$name][] = array(OTK_RESULT_WARNING, "Step $_steps returned an invalid result - not an array!");
+					$this->testResults[$name][] = array(TTK_RESULT_WARNING, "Step $_steps returned an invalid result - not an array!");
 					$this->warnings++;
 				} elseif (count($_step) != 2 || !is_string($_step[1]) ||
-						($_step[0] !== OTK_RESULT_FAIL && $_step[0] !== OTK_RESULT_SUCCESS
-							&& $_step[0] !== OTK_RESULT_WARNING && $_step[0] !== OTK_RESULT_SKIPPED)) {
-						$this->testResults[$name][] = array(OTK_RESULT_WARNING, "Step $_steps returned an invalid result - incorrect array format!");
+						($_step[0] !== TTK_RESULT_FAIL && $_step[0] !== TTK_RESULT_SUCCESS
+							&& $_step[0] !== TTK_RESULT_WARNING && $_step[0] !== TTK_RESULT_SKIPPED)) {
+						$this->testResults[$name][] = array(TTK_RESULT_WARNING, "Step $_steps returned an invalid result - incorrect array format!");
 					$this->warnings++;
 				} else {
 					$this->testResults[$name][] = $_step;
 					switch ($_step[0]) {
-						case OTK_RESULT_SUCCESS:
+						case TTK_RESULT_SUCCESS:
 							$this->succeeded++;
 							break;
-						case OTK_RESULT_FAIL:
+						case TTK_RESULT_FAIL:
 							$this->errors++;
 							break;
-						case OTK_RESULT_WARNING:
+						case TTK_RESULT_WARNING:
 							$this->warnings++;
 							break;
-						case OTK_RESULT_SKIPPED:
+						case TTK_RESULT_SKIPPED:
 							$this->skipped++;
 							break;
-						case OTK_RESULT_NONE:
-							$this->testResults[$name][] = array(OTK_RESULT_WARNING, "Step $_steps returned OTK_RESULT_NONE which is reserved for prepareTest() and cleanupTest()");
+						case TTK_RESULT_NONE:
+							$this->testResults[$name][] = array(TTK_RESULT_WARNING, "Step $_steps returned TTK_RESULT_NONE which is reserved for prepareTest() and cleanupTest()");
 							$this->warnings++;
 							break;
 					}
@@ -259,13 +259,13 @@ abstract class TestSet
 			}
 		}
 
-		if (($_r = $_case->cleanupTest()) === OTK_RESULT_SUCCESS) {
-			$this->testResults[$name][] = array(OTK_RESULT_SUCCESS, 'Test cleanup completed successfully');
+		if (($_r = $_case->cleanupTest()) === TTK_RESULT_SUCCESS) {
+			$this->testResults[$name][] = array(TTK_RESULT_SUCCESS, 'Test cleanup completed successfully');
 			$this->succeeded++;
-		} elseif ($_r === OTK_RESULT_NONE) {
+		} elseif ($_r === TTK_RESULT_NONE) {
 			; // Nothing to do
 		} else {
-			$this->testResults[$name][] = array(OTK_RESULT_WARNING, $_r);
+			$this->testResults[$name][] = array(TTK_RESULT_WARNING, $_r);
 			$this->warnings++;
 		}
 		if (($_details = $_case->getDetails()) !== null) {
@@ -285,7 +285,7 @@ abstract class TestSet
 			,'result' => $this->testResults
 			,'details' => $this->details
 		);
-		if (($_area = OWLloader::getArea('testresults', OTK_UI, $results)) !== null) {
+		if (($_area = TTloader::getArea('testresults', TTK_UI, $results)) !== null) {
 			OutputHandler::outputRaw($_area->getArea());
 		}
 	}

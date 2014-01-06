@@ -5,30 +5,30 @@
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
 /**
- * \ingroup OTK_TESTSETS
+ * \ingroup TTK_TESTSETS
  * This testcase does some node handling, like inserts, move and remove
  * \brief DbDriver ALTER TABLE Testcase
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \version Sep 26, 2011 -- O van Eijk -- initial version
  */
-class OTKDbdriver_Alter implements TestCase
+class TTKDbdriver_Alter implements TestCase
 {
 	// Name of the temporary database table that will be used in this testcase
 	private $tablename;
@@ -38,19 +38,19 @@ class OTKDbdriver_Alter implements TestCase
 
 	public function __construct()
 	{
-		$this->tablename = OTKDbdriver_tableName();
+		$this->tablename = TTKDbdriver_tableName();
 		$this->details = '';
 	}
 
 	public function prepareTest ()
 	{
-		return OTK_RESULT_NONE;
+		return TTK_RESULT_NONE;
 	}
 
 	public function performTest ()
 	{
 		$returnCodes = array();
-		$_scheme = OWL::factory('schemehandler');
+		$_scheme = TT::factory('schemehandler');
 
 		$step = 1;
 		$_scheme->createScheme($this->tablename);
@@ -59,25 +59,25 @@ class OTKDbdriver_Alter implements TestCase
 		$_scheme->defineScheme($data['columns']);
 		$_scheme->defineIndex($data['indexes']);
 		// Step 1: alter a field
-		if ($_scheme->scheme() <= OWL_SUCCESS) {
+		if ($_scheme->scheme() <= TT_SUCCESS) {
 			$_scheme->reset();
-			$returnCodes[] = array(OTK_RESULT_SUCCESS, 'Successfully altered the table');
+			$returnCodes[] = array(TTK_RESULT_SUCCESS, 'Successfully altered the table');
 		} else {
-			$_scheme->signal(OWL_WARNING, $msg);
+			$_scheme->signal(TT_WARNING, $msg);
 			$_scheme->reset();
-			$returnCodes[] = array(OTK_RESULT_FAIL, 'Altering the table failed in step 1');
+			$returnCodes[] = array(TTK_RESULT_FAIL, 'Altering the table failed in step 1');
 			$this->details .= "<p>Schemehandler returned an error while altyering the table:<blockquote>$msg</blockquote>";
 		}
 
 		// Step 2: Check the results
 		$_expectedResult = $this->getExpected($step);
 		if ($data == $_expectedResult) { // Just 2 '=' signs since not all datatypes (int vs string) might match
-			$returnCodes[] = array(OTK_RESULT_SUCCESS, 'Table comparison succeeded');
+			$returnCodes[] = array(TTK_RESULT_SUCCESS, 'Table comparison succeeded');
 		} else {
-			$returnCodes[] = array(OTK_RESULT_WARNING, 'Table comparison failed');
+			$returnCodes[] = array(TTK_RESULT_WARNING, 'Table comparison failed');
 
 			$this->details .= "<p>The table definition differed from the exected structure: "
-				. OTKHelpers::compareTable($_expectedResult, $data);
+				. TTKHelpers::compareTable($_expectedResult, $data);
 		}
 
 		// Step 3: Add a field
@@ -91,12 +91,12 @@ class OTKDbdriver_Alter implements TestCase
 		// Step 4: Check the results
 		$_expectedResult = $this->getExpected($step);
 		if ($data == $_expectedResult) { // Just 2 '=' signs since not all datatypes (int vs string) might match
-			$returnCodes[] = array(OTK_RESULT_SUCCESS, 'Table comparison succeeded');
+			$returnCodes[] = array(TTK_RESULT_SUCCESS, 'Table comparison succeeded');
 		} else {
-			$returnCodes[] = array(OTK_RESULT_FAIL, 'Table comparison failed');
+			$returnCodes[] = array(TTK_RESULT_FAIL, 'Table comparison failed');
 
 			$this->details .= "<p>The table definition differed from the exected structure: "
-				. OTKHelpers::compareTable($_expectedResult, $data);
+				. TTKHelpers::compareTable($_expectedResult, $data);
 		}
 		return $returnCodes;
 	}
@@ -104,7 +104,7 @@ class OTKDbdriver_Alter implements TestCase
 
 	public function cleanupTest ()
 	{
-		return OTK_RESULT_NONE;
+		return TTK_RESULT_NONE;
 	}
 
 	public function getDetails ()

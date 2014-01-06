@@ -5,30 +5,30 @@
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
 /**
- * \ingroup OTK_TESTSETS
+ * \ingroup TTK_TESTSETS
  * This testcase does some node handling, like inserts, move and remove
  * \brief HData Node Testcase
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \version May 26, 2011 -- O van Eijk -- initial version
  */
-class OTKHdata_Nodehandling implements TestCase
+class TTKHdata_Nodehandling implements TestCase
 {
 	// Hierarchical data handler
 	private $hdatahandler;
@@ -43,7 +43,7 @@ class OTKHdata_Nodehandling implements TestCase
 	{
 		$this->details = '';
 		$this->hdatahandler = new HDataHandler();
-		$this->hdatahandler->setTablename(OTKHdata_tableName());
+		$this->hdatahandler->setTablename(TTKHdata_tableName());
 		$this->hdatahandler->setLeft('lval');
 		$this->hdatahandler->setRight('rval');
 	}
@@ -77,7 +77,7 @@ class OTKHdata_Nodehandling implements TestCase
 		if ($_stat === false) {
 			return $this->hdatahandler->getLastWarning();
 		}
-		return OTK_RESULT_SUCCESS;
+		return TTK_RESULT_SUCCESS;
 	}
 
 	public function performTest ()
@@ -85,7 +85,7 @@ class OTKHdata_Nodehandling implements TestCase
 		$this->returnCodes = array();
 
 		// Step 1; check the prepared values and move some nodes there
-		$retVal = OTKHdata_getData($data);
+		$retVal = TTKHdata_getData($data);
 		$this->checkResult ($retVal, $data, 1, 'Inserting the "Musical instruments" tree');
 
 		// Step 2; add some subcategories
@@ -95,17 +95,17 @@ class OTKHdata_Nodehandling implements TestCase
 		$this->hdatahandler->moveNode('node', 'Saxophone', array('field' => 'node', 'value' => 'Single reed'));
 		$this->hdatahandler->moveNode('node', 'Oboe', array('field' => 'node', 'value' => 'Double reed'));
 		$this->hdatahandler->moveNode('node', 'Bassoon', array('field' => 'node', 'value' => 'Double reed'));
-		$retVal = OTKHdata_getData($data);
+		$retVal = TTKHdata_getData($data);
 		$this->checkResult ($retVal, $data, 2, 'Inserting new categories and move nodes');
 
 		// Step 3; remove a node, moving the childs upwards
 		$this->hdatahandler->removeNode('node', 'Tuned');
-		$retVal = OTKHdata_getData($data);
+		$retVal = TTKHdata_getData($data);
 		$this->checkResult ($retVal, $data, 3, 'Removing a node, moving the children up');
 
 		// Step 4; remove a tree
 		$this->hdatahandler->removeTree('node', 'Wind');
-		$retVal = OTKHdata_getData($data);
+		$retVal = TTKHdata_getData($data);
 		$this->checkResult ($retVal, $data, 4, 'Removing a complete tree');
 
 		// Step 5; crosslinking
@@ -130,20 +130,20 @@ class OTKHdata_Nodehandling implements TestCase
 	{
 		switch ($retVal) {
 			case null:
-				$this->returnCodes[] = array(OTK_RESULT_FAIL, 'Table is empty  (but that can\'t happen...)');
+				$this->returnCodes[] = array(TTK_RESULT_FAIL, 'Table is empty  (but that can\'t happen...)');
 				break;
 			case false:
-				$this->returnCodes[] = array(OTK_RESULT_FAIL, 'Failure while retrieving the results: ' . $data);
+				$this->returnCodes[] = array(TTK_RESULT_FAIL, 'Failure while retrieving the results: ' . $data);
 				break;
 			case true:
 				$_expectedResult = $this->getExpected($step);
 				if ($data === $_expectedResult) {
-					$this->returnCodes[] = array(OTK_RESULT_SUCCESS, $stepDescription . ' succeeded');
+					$this->returnCodes[] = array(TTK_RESULT_SUCCESS, $stepDescription . ' succeeded');
 				} else {
-					$this->returnCodes[] = array(OTK_RESULT_FAIL, $stepDescription . ' failed');
+					$this->returnCodes[] = array(TTK_RESULT_FAIL, $stepDescription . ' failed');
 
 					$this->details .= "<p>The datatree in step $step differed from the expected structure: "
-						. OTKHelpers::compareTable($_expectedResult, $data);
+						. TTKHelpers::compareTable($_expectedResult, $data);
 				}
 				break;
 		}
@@ -156,7 +156,7 @@ class OTKHdata_Nodehandling implements TestCase
 
 	public function cleanupTest ()
 	{
-		return OTK_RESULT_NONE;
+		return TTK_RESULT_NONE;
 	}
 
 	public function getDetails ()

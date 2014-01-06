@@ -5,30 +5,30 @@
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
 /**
- * \ingroup OTK_TESTSETS
+ * \ingroup TTK_TESTSETS
  * Check all messages codes that are registered with Register::registerCode() but not in the message file
  * \brief Check message codes
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \version Jun 7, 2011 -- O van Eijk -- initial version
  */
-class OTKTranslations_Messages implements TestCase
+class TTKTranslations_Messages implements TestCase
 {
 	// List of messages
 	private $messages;
@@ -56,13 +56,13 @@ class OTKTranslations_Messages implements TestCase
 		$this->details = '';
 		$this->messages = array();
 		$this->statusCodes = array(
-			 'statusSet' => array() // All codes used in setStatus and OWL::stat
+			 'statusSet' => array() // All codes used in setStatus and TT::stat
 			,'statusReg' => array() // All codes defined in registerCode
 		);
 
-		$this->topLocation = OTKTranslations_topLocation();
-		$this->libLocation = OTKTranslations_libLocation();
-		$this->applCode = OTKTranslations_applicCode();
+		$this->topLocation = TTKTranslations_topLocation();
+		$this->libLocation = TTKTranslations_libLocation();
+		$this->applCode = TTKTranslations_applicCode();
 	}
 
 	public function prepareTest ()
@@ -88,7 +88,7 @@ class OTKTranslations_Messages implements TestCase
 			}
 		}
 		fclose($mFile);
-		return OTK_RESULT_SUCCESS;
+		return TTK_RESULT_SUCCESS;
 	}
 
 	public function performTest ()
@@ -98,7 +98,7 @@ class OTKTranslations_Messages implements TestCase
 		$this->checkDirectory ($this->topLocation);
 		$this->checkCodes();
 		if (count($this->returnCodes) == 0) {
-			$this->returnCodes[] = array(OTK_RESULT_SUCCESS, "All messages codes have been registered");
+			$this->returnCodes[] = array(TTK_RESULT_SUCCESS, "All messages codes have been registered");
 		}
 		return $this->returnCodes;
 	}
@@ -106,7 +106,7 @@ class OTKTranslations_Messages implements TestCase
 	private function checkDirectory ($dir)
 	{
 		if (($dHandle = opendir($dir)) === false) {
-			$this->returnCodes[] = array(OTK_RESULT_FAIL, "Error opening directory $dir for read");
+			$this->returnCodes[] = array(TTK_RESULT_FAIL, "Error opening directory $dir for read");
 			return;
 		}
 		while ($file = readdir($dHandle)) {
@@ -125,9 +125,9 @@ class OTKTranslations_Messages implements TestCase
 
 	private function checkFile ($file)
 	{
-		// TODO Existing OWL codes are not checked when checking a different application
+		// TODO Existing TT codes are not checked when checking a different application
 		if (($fHandle = fopen($file, 'r')) === false) {
-			$this->returnCodes[] = array(OTK_RESULT_WARNING, "Error opening file $file for read");
+			$this->returnCodes[] = array(TTK_RESULT_WARNING, "Error opening file $file for read");
 			return;
 		}
 		$lineCounter = 0;
@@ -138,7 +138,7 @@ class OTKTranslations_Messages implements TestCase
 				// TODO Might as well check for __FILE__ and __LINE__ here
 				$this->statusCodes['statusSet'][$matches[3]] = array($file, $lineCounter);
 			}
-			if (preg_match("/OWL::stat\s*\((__FILE__)?\s*,?\s*(__LINE__)?\s*,?\s*([A-Z_]*?)[,\ \)]/i", $line, $matches)) {
+			if (preg_match("/TT::stat\s*\((__FILE__)?\s*,?\s*(__LINE__)?\s*,?\s*([A-Z_]*?)[,\ \)]/i", $line, $matches)) {
 				// TODO This check also scans outcommented lines or blocks
 				// TODO Might as well check for __FILE__ and __LINE__ here
 				$this->statusCodes['statusSet'][$matches[3]] = array($file, $lineCounter);
@@ -146,9 +146,9 @@ class OTKTranslations_Messages implements TestCase
 			if (preg_match("/^\s*Register::registerCode\s*\('([A-Z_]*?)'\)/i", $line, $matches)) {
 				$this->statusCodes['statusReg'][$matches[1]] = 1;
 				if (!array_key_exists($matches[1], $this->messages)) {
-					$this->returnCodes[] = array(OTK_RESULT_FAIL, "Message code $matches[1] does not appear in a message in file $file on line $lineCounter");
+					$this->returnCodes[] = array(TTK_RESULT_FAIL, "Message code $matches[1] does not appear in a message in file $file on line $lineCounter");
 				} elseif ($this->messages[$matches[1]] == '') {
-					$this->returnCodes[] = array(OTK_RESULT_WARNING, "Message code $matches[1] has no text in file $file on line $lineCounter");
+					$this->returnCodes[] = array(TTK_RESULT_WARNING, "Message code $matches[1] has no text in file $file on line $lineCounter");
 				}
 			}
 		}
@@ -158,14 +158,14 @@ class OTKTranslations_Messages implements TestCase
 	{
 		foreach ($this->statusCodes['statusSet'] as $code => $where) {
 			if (!array_key_exists($code, $this->statusCodes['statusReg'])) {
-				$this->returnCodes[] = array(OTK_RESULT_FAIL, "Status code $code is used but never registered in file $where[0] on line $where[1]");
+				$this->returnCodes[] = array(TTK_RESULT_FAIL, "Status code $code is used but never registered in file $where[0] on line $where[1]");
 			}
 		}
 	}
 
 	public function cleanupTest ()
 	{
-		return OTK_RESULT_NONE;
+		return TTK_RESULT_NONE;
 	}
 
 	public function getDetails ()

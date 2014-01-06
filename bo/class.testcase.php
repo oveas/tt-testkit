@@ -5,26 +5,26 @@
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
- * This file is part of OTK.
+ * This file is part of TTK.
  *
- * OTK is free software: you can redistribute it and/or modify
+ * TTK is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * OTK is distributed in the hope that it will be useful,
+ * TTK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OTK. If not, see http://www.gnu.org/licenses/.
+ * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
 /**
- * \ingroup OTK_BO
+ * \ingroup TTK_BO
  * Interface that defines the testcase classes. Classes that implement this interface must be
- * in a file called 'case.&lt;casename&gt;.php'. The classname must be 'OTK&lt;Setname&gt;_&lt;Casename&gt;
+ * in a file called 'case.&lt;casename&gt;.php'. The classname must be 'TTK&lt;Setname&gt;_&lt;Casename&gt;
  * where &lt;casename&gt; is the name of the testcase and &lt;setname&gt; the name of the testset it
  * belongs to.
  *
@@ -44,7 +44,7 @@ interface TestCase {
 
 	/**
 	 * Prepare a testcase, e.g. create some database tables that are required for this testcase.
-	 * \return OTK_RESULT_SUCCESS on success, OTK_RESULT_NONE when this testcase needs no preparation or
+	 * \return TTK_RESULT_SUCCESS on success, TTK_RESULT_NONE when this testcase needs no preparation or
 	 * an error message when failed
 	 * \author Oscar van Eijk, Oveas Functionality Provider
 	 */
@@ -61,10 +61,10 @@ interface TestCase {
 	 * null when the step was skipped, e.g.
 	 * \code
 	 * 	array(
-	 * 		 array(OTK_RESULT_SUCCESS, 'Step 1 completed successfully')
-	 * 		,array(OTK_RESULT_SUCCESS, 'Step 2 completed successfully')
-	 * 		,array(OTK_RESULT_FAIL, 'Step 3 failed with code XX')
-	 * 		,array(OTK_RESULT_SKIPPED, 'Step 4 could not execute because step 3 failed')
+	 * 		 array(TTK_RESULT_SUCCESS, 'Step 1 completed successfully')
+	 * 		,array(TTK_RESULT_SUCCESS, 'Step 2 completed successfully')
+	 * 		,array(TTK_RESULT_FAIL, 'Step 3 failed with code XX')
+	 * 		,array(TTK_RESULT_SKIPPED, 'Step 4 could not execute because step 3 failed')
 	 * 	)
 	 * \endcode
 	 * \author Oscar van Eijk, Oveas Functionality Provider
@@ -73,7 +73,7 @@ interface TestCase {
 
 	/**
 	 * Cleanup the testenvironment, e.g. drop temporary tables
-	 * \return OTK_RESULT_SUCCESS on success, OTK_RESULT_NONE when this testcase needs no cleanup or
+	 * \return TTK_RESULT_SUCCESS on success, TTK_RESULT_NONE when this testcase needs no cleanup or
 	 * an error message when failed
 	 * \author Oscar van Eijk, Oveas Functionality Provider
 	 */
