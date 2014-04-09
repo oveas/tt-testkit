@@ -133,13 +133,12 @@ class TTKTranslations_Messages implements TestCase
 		$lineCounter = 0;
 		while ($line = fgets($fHandle, 1024)) {
 			$lineCounter++;
+			$line = uncommentLine($line, TT_COMMENT_PHP);
 			if (preg_match("/->setStatus\s*\((__FILE__)?\s*,?\s*(__LINE__)?\s*,?\s*([A-Z_]*?)[,\ \)]/i", $line, $matches)) {
-				// TODO This check also scans outcommented lines or blocks
 				// TODO Might as well check for __FILE__ and __LINE__ here
 				$this->statusCodes['statusSet'][$matches[3]] = array($file, $lineCounter);
 			}
 			if (preg_match("/TT::stat\s*\((__FILE__)?\s*,?\s*(__LINE__)?\s*,?\s*([A-Z_]*?)[,\ \)]/i", $line, $matches)) {
-				// TODO This check also scans outcommented lines or blocks
 				// TODO Might as well check for __FILE__ and __LINE__ here
 				$this->statusCodes['statusSet'][$matches[3]] = array($file, $lineCounter);
 			}
