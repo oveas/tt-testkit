@@ -53,4 +53,24 @@ class TTKUser extends User
 		}
 		return TTKUser::$instance;
 	}
+	
+	/**
+	 * Show the main options
+	 */
+	public function showTestMenu()
+	{
+		if (($_mnu = TTloader::getArea('testmenu', TTK_UI)) !== null) {
+			$_mnu->addToDocument(TTCache::get(TTCACHE_OBJECTS, 'mainMenuContainer'));
+		}
+	}
+	
+	/**
+	 * Display the page with testoptions
+	 * TODO Yet to be created!!
+	 */
+	public function showTestOpts ()
+	{
+		require (TTK_SO . '/class.testkit.php');
+		TT::factory('Dispatcher')->dispatch('TTK#TTK_BO#ttk#TTK#selectTestCases');
+	}
 }

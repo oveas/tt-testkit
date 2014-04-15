@@ -4,38 +4,6 @@
  * Style sheet for the TT Testkit
  * \author Oscar van Eijk, Oveas Functionality Provider
  */
-body {
-	background-color : #def3dd;
-}
-
-.headerContainer, .testArea {
-	background-color : #def3dd;
-	font-family : Helvetica, sans-serif, fantasy;
-	font-size : 10pt;
-	color : #275324;
-}
-a {
-	font-style : italic;
-}
-a:link, a:visited, a:active {
-	background-color : #86a985;
-	text-decoration : none;
-}
-a:hover, a:visited:hover {
-	text-decoration : underline;
-	background-color : #def3dd;
-}
-
-h3.testArea {
-	font-family : Arial, sans-serif;
-	font-size : 14pt;
-	font-weight : bold;
-}
-h3.testArea {
-	font-family : Arial, sans-serif;
-	font-size : 12pt;
-	font-style : italic;
-}
 
 .resultFail {
 	font-weight : bold;

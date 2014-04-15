@@ -51,7 +51,7 @@
 	public function selectTestCases ()
 	{
 		if (($_area = TTloader::getArea('testsets', TTK_UI)) !== null) {
-			$_area->addToDocument($GLOBALS['TTK']['BodyContainer']);
+			$_area->addToDocument(TTCache::get(TTCACHE_OBJECTS, 'mainContentContainer'));
 		}
 	}
 

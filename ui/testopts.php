@@ -2,7 +2,7 @@
 /**
  * \file
  * \ingroup TTK_UI_LAYER
- * This file creates the main menu
+ * This file creates the TTK main page
  * \author Oscar van Eijk, Oveas Functionality Provider
  * \copyright{2011} Oscar van Eijk, Oveas Functionality Provider
  * \license
@@ -25,11 +25,11 @@
 /**
  * \ingroup TTK_UI_LAYER
  * Setup the contentarea holding the main menu
- * \brief Main manu
+ * \brief Test manu
  * \author Oscar van Eijk, Oveas Functionality Provider
- * \version May 19, 2011 -- O van Eijk -- initial version
+ * \version Apr 11, 2014 -- O van Eijk -- initial version
  */
-class MainmenuArea extends ContentArea
+class TestoptsArea extends ContentArea
 {
 	/**
 	 * Generate the link
@@ -37,13 +37,16 @@ class MainmenuArea extends ContentArea
 	 */
 	public function loadArea($arg = null)
 	{
-		// Create the container for menu items
-		$this->contentObject = new Container('list', '', array('class' => 'mainMenu'));
-
-		// Home link
-		$_txt = $this->trn('Home');
-		$_lnk = new Container('link', $_txt);
-		$_lnk->setContainer(array('href' => $_SERVER['PHP_SELF']));
-		$this->contentObject->addContainer('item', $_lnk);
+		$this->contentObject = new Container('div');
+		
+		$_form = TT::factory('FormHandler');
+		$_d = $_form->get(TT_DISPATCHER_NAME);
+		if ($_form->getStatus() === FORM_NOVALUE || !$_d) {
+			// Create the body container
+			$dispatcher->dispatch('TT TestKit#TTK_BO#ttk#TTK#selectTestCases');
+		} else {
+			$dispatcher->dispatch(); // Run the tests. All output will be echoed immediatly
+		}
+		
 	}
 }

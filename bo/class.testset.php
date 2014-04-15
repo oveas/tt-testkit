@@ -286,8 +286,12 @@ abstract class TestSet
 			,'details' => $this->details
 		);
 		if (($_area = TTloader::getArea('testresults', TTK_UI, $results)) !== null) {
-			OutputHandler::outputRaw($_area->getArea());
-			OutputHandler::outputNow();
+	//		$_document = TT::factory('Document', 'ui');
+	//		$_document->addToContent($_area);
+			$_area->addToDocument();
+//			OutputHandler::outputRaw($_document);
+//			OutputHandler::outputRaw($_area->getArea());
+//			OutputHandler::outputNow();
 		}
 	}
 }

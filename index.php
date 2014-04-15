@@ -44,9 +44,6 @@ error_reporting(E_ALL | E_STRICT);
 //! Toplevel where TT can be found
 define ('TT_ROOT', '/var/www/terra-terra');
 
-//! TT TestKit configuration file
-define ('APP_CONFIG_FILE', '/var/www/ttk/testkit.cfg');
-
 //! We wanna use timers in the test application.
 define ('TT_TIMERS_ENABLED', true);
 //! @}

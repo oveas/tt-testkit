@@ -30,28 +30,27 @@ $document   = TT::factory('Document', 'ui');
 $document->loadStyle(TTK_CSS . '/testkit.css');
 
 // Create the header container
-$GLOBALS['TTK']['HeaderContainer'] = new Container('div', '', array('class' => 'headerContainer'));
+//$GLOBALS['TTK']['HeaderContainer'] = new Container('div', '', array('class' => 'headerContainer'));
 
 // Create the 'Home' link
-$_home = TTloader::getArea('mainmenu', TTK_UI);
+$_home = TTloader::getArea('testmenu', TTK_UI);
 $_home->addToDocument($GLOBALS['TTK']['HeaderContainer']);
+
+Layout::createContainers();
 
 // Make a check first to see if we are gonna execute tests (don't wait for the dispatcher)
 $_form = TT::factory('FormHandler');
 $_d = $_form->get(TT_DISPATCHER_NAME);
 if ($_form->getStatus() === FORM_NOVALUE || !$_d) {
 	// Create the body container
-	$GLOBALS['TTK']['BodyContainer'] = new Container('div', '', array('class' => 'bodyContainer'));
 	$dispatcher->dispatch('TT TestKit#TTK_BO#ttk#TTK#selectTestCases');
-	// Add the containers to the document
-	$document->addToContent($GLOBALS['TTK']['HeaderContainer']);
-	$document->addToContent($GLOBALS['TTK']['BodyContainer']);
+	Layout::loadContainers();
 	// Display the document
 	OutputHandler::outputRaw($document->showElement());
 } else {
 	// Show the contents immedialty (without using a header container) to make sure we
 	// don't have to wait 'til all tests are completed
-	$document->addToContent($GLOBALS['TTK']['HeaderContainer']);
+	Layout::loadContainers();
 	OutputHandler::outputRaw($document->showElement());
 	OutputHandler::outputNow();
 	$dispatcher->dispatch(); // Run the tests. All output will be echoed immediatly
