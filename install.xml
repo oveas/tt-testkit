@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation='http://terra-terra.org/docs/xmlscheme/ttInstall.xsd'
+		code = "TTK"
+		url = "ttk"
+		name = "Terra-Terra TestKit"
+		version = "v0.2"
+		released = "2014-05-20"
+		description = "Testapplication for Terra-Terra"
+		link = "https://github.com/oveas/tt-testkit"
+		author = "Oscar van Eijk"
+		license = "LGPL"
+	>
+
+	<configuration>
+		<items section = "general">
+			<item id = "debug">16711935</item>
+			<item id = "js_signal">true</item>
+		</items>
+		<items section = "database">
+ 			<item id = "prefix">ttk_</item>
+		</items>
+	</configuration>
+
+	<rights>
+		<right id = "createtestset">Can create new testsets</right>
+		<right id = "createtestcase">Can create new testcases in an existing testset</right>
+		<right id = "executetest">Can execute tests</right>
+	</rights>
+
+	<groups>
+		<group name = "TTK admin" description = "TT Testkit Administrators">
+			<right>createtestset</right>
+			<right>createtestcase</right>
+			<right>executetest</right>
+		</group>
+		<group name = "TTK Developers" description = "TT developers">
+			<right>createtestcase</right>
+			<right>executetest</right>
+		</group>
+		<group name = "TTK Testers" description = "TT testers">
+			<right>executetest</right>
+		</group>
+	</groups>
+</application>
