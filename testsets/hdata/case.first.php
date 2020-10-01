@@ -87,18 +87,25 @@ class TTKHdata_First implements TestCase
 			)
 		);
 
-
 		$_scheme->createScheme($this->tablename);
 		$_scheme->setEngine('MyISAM'); // TODO - This test won't work with InnoDB on MySQL otherwise
 		$_scheme->defineScheme($_table);
 		$_scheme->defineIndex($_index);
-		if ($_scheme->scheme() <= TT_SUCCESS) {
-			$_scheme->reset();
-			return TTK_RESULT_SUCCESS;
+		$_severity = $_scheme->scheme();
+		
+		if ($_scheme->getStatus() === SCHEMEHANDLE_EXISTS) {
+			$db = TT::factory('dbhandler');
+			$dbId = $db->getResource();
+			$db->resetTable($this->tablename);
 		} else {
-			$_scheme->signal(TT_WARNING, $msg);
-			$_scheme->reset();
-			return $msg;
+			if ($_severity <= TT_SUCCESS) {
+				$_scheme->reset();
+				return TTK_RESULT_SUCCESS;
+			} else {
+				$_scheme->signal(TT_WARNING, $msg);
+				$_scheme->reset();
+				return $msg;
+			}
 		}
 	}
 

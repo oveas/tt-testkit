@@ -77,7 +77,7 @@ class TTKHdata_Last implements TestCase
 	}
 
 	public function cleanupTest ()
-	{//return 'Disabled the drop';
+	{
 		$db = TT::factory('dbhandler');
 		$dbId = $db->getResource();
 		if ($db->getDriver()->dbDropTable($dbId, $db->tablename($this->tablename, true))) {

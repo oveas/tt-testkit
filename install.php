@@ -23,7 +23,7 @@
  */
 
 // Toplevel where TT can be found
-define ('TT_ROOT', '/var/www/terra-terra');
+define ('TT_ROOT', dirname(dirname(dirname(__FILE__))));
 
 require (TT_ROOT . '/TTinstaller.php');
 

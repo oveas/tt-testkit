@@ -76,6 +76,5 @@ class TestresultsArea extends ContentArea
 		}
 
 		$this->contentObject = new Container('div', $_html, array('class' => 'testArea'));
-		$this->contentObject->addToContent($form);
 	}
 }

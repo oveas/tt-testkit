@@ -83,7 +83,7 @@ class TTKTranslations_Messages implements TestCase
 		}
 
 		while (($line = fgets($mFile, 1024)) !== false) {
-			if (preg_match("/\s+,?\s*([A-Z_]*)\s+=>\s+'(.*?)'/i", $line, $match)) {
+			if (preg_match("/\s+,?\s*'([A-Z_]*)'\s+=>\s+'(.*?)'/i", $line, $match)) {
 				$this->messages[$match[1]] = $match[2];
 			}
 		}

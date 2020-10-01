@@ -23,4 +23,4 @@
  */
 TT::factory('Dispatcher')->dispatch('TTK#TTK_BO#ttkuser#TTKUser#showTestMenu');
 // Load the stypesheet
- TT::factory('Document', 'ui')->loadStyle(TTK_CSS . '/testkit.css');
+TT::factory('Document', 'ui')->loadStyle(TTK_CSS . '/testkit.css');
