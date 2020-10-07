@@ -22,6 +22,6 @@
  */
 
 $_labels = array (
-	 'Available testsets' => '<h2>Available testsets:</h2>'
+	 'Available testsets' => 'Available testsets'
 	,'Start tests' => 'Start tests'
 );

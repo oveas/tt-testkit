@@ -30,7 +30,7 @@
  */
 function TTKHdata_tableName ()
 {
-	return 'hdata';
+	return 'ttk_hdata';
 }
 
 /**

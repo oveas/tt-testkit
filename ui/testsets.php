@@ -42,7 +42,7 @@ class TestsetsArea extends ContentArea
 	public function loadArea($arg = null)
 	{
 		// Create a new form
-		$form = new Form(
+		$_form = new Form(
 			  array(
 				 'application' => 'TT TestKit'
 				,'include_path' => 'TTK_BO'
@@ -55,21 +55,40 @@ class TestsetsArea extends ContentArea
 			)
 		);
 
-		$this->testKit = TT::factory('testkit', TTK_SO);
-		$sets = $this->testKit->getTestSets();
+		$_table = new Container('table', '', array('style'=>'border: 0px;'));
 
-		foreach ($sets as $n => $d) {
-			$_fld = $form->addField('checkbox', "set[$n]", 1);
-			$_lbl = $d . '<br/>';
+		$this->testKit = TT::factory('testkit', TTK_SO);
+		$_sets = $this->testKit->getTestSets();
+
+		foreach ($_sets as $_name => $_class) {
+			$_row = $_table->addContainer('row');
+			$_fld = $_form->addField('checkbox', "set[$_name]", 1);
+			$_row->addContainer('cell', $_form->showField("set[$_name]"));
+			$_lbl = $_class::getDescription() . '<br/>';
 			$_cntnr = new Container('label', $_lbl, array(), array('for' => &$_fld));
-			$form->addToContent($_fld);
-			$form->addToContent($_cntnr);
+			$_cell = $_row->addContainer('cell');
+			$_cell->setContent($_cntnr);
+			$_class::getAdditionalData($_table, $_form);
 		}
 
-		$_fld = $form->addField('submit', 'act', $this->trn('Start tests'));
-		$form->addToContent($_fld);
+		$_row = $_table->addContainer('row');
+		$_form->addField('submit', 'act', $this->trn('Start tests'));
+		$_row->addContainer(
+			 'cell'
+			,$_form->showField('act')
+			,array('style'=>'text-align:center;')
+			,array('colspan'=>2)
+		);
 
-		$this->contentObject = new Container('div', $this->trn('Available testsets'), array('class' => 'testArea'));
-		$this->contentObject->addToContent($form);
+		$_fldSet = new Container(
+			 'fieldset'
+			,$_table->showElement()
+			,array()
+		);
+		$_fldSet->addContainer('legend', $this->trn('Available testsets'));
+		$_form->addToContent($_fldSet);
+
+		$this->contentObject = new Container('div', '', array('class' => 'testArea'));
+		$this->contentObject->addToContent($_form);
 	}
 }

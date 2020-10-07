@@ -148,6 +148,18 @@ abstract class TestSet
 	}
 
 	/**
+	 * If a testcase required additional data, this method will add formfields to the table where
+	 * testcases are selected to gather the data.
+	 * \param[in,out] $table Reference to the table where formfields can be added in one or more rows.
+	 * \param[in,out] $form Reference to the form
+	 * \return True is additional data is required.
+	 */
+	static public function getAdditionalData($table, $form)
+	{
+		return false;
+	}
+
+	/**
 	 * Scan the testset directory for all files holding either testcases (<em>case.&lt;name&gt;.php</em>)
 	 * or helper functions or class (<em>helper.php</em>).
 	 * \param[in] $location Directory to scan

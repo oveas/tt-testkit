@@ -39,4 +39,27 @@ class TTKMaildriver extends TestSet
 	{
 		return 'This testset contains some tests to check mail drivers. During these tests, 3 different mail addresses will be used';
 	}
+
+	static public function getAdditionalData($table, $form)
+	{
+		self::getAddress($table, $form, 'Sender address', 'from');
+		self::getAddress($table, $form, 'Recipient 1 (To)', 'to');
+		self::getAddress($table, $form, 'Recipient 2 (Cc)', 'cc');
+	}
+	
+	static private function getAddress ($table, $form, $label, $name)
+	{
+		$_row = $table->addContainer('row');
+		$_cell = $_row->addContainer('cell');
+
+		$_fld = $form->addField('text', $name, '', array('size' => 50));
+		$_lbl = ContentArea::translate($label);
+//		$_lbl = $label;
+		$_cntnr = new Container('label', $_lbl, array('style' => 'display: block; float: left; width: 100px'), array('for' => &$_fld));
+		$_cell = $_row->addContainer('cell');
+		$_cell->setContent($_cntnr);
+		$_cell->addToContent($form->showField($name));
+		
+//		$_row->addContainer('cell', $form->showField($name));
+	}
 }

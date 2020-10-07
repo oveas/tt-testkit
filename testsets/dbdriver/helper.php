@@ -30,5 +30,5 @@
  */
 function TTKDbdriver_tableName ()
 {
-	return 'ttkperson';
+	return 'ttk_person';
 }

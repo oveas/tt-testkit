@@ -96,7 +96,8 @@ class TestKit
 		}
 		// Use call_user_func below.
 		// $testSet::getDescription() will work since PHP 5.3.0, but my Eclipse PDT still signals a syntax error :-S
-		$this->sets[ucfirst($name)] = call_user_func(array($testSet, 'getDescription'));
+//		$this->sets[ucfirst($name)] = call_user_func(array($testSet, 'getDescription'));
+		$this->sets[ucfirst($name)] = $testSet;
 		return (true);
 	}
 
