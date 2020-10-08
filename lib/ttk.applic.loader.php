@@ -25,7 +25,7 @@
 /*
  * Register this class and all status codes
  */
-Register::registerApp (TTloader::getCurrentAppName(), 0xff000001);
+Register::registerApp (TTloader::getCurrentAppName(), 0x02000000);
 
 // Set up the label translations
 Register::registerLabels();

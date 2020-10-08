@@ -74,7 +74,7 @@ class TTKMaildriver_Sendmail implements TestCase
 		$_mailer->setBody('This is the first testmail from the Terra-Terra testkit');
 
 		if ($_mailer->send() <= TT_SUCCESS) {
-			$returnCodes[] = array(TTK_RESULT_SUCCESS, 'Successfully altered the table');
+			$returnCodes[] = array(TTK_RESULT_SUCCESS, 'Successfully sent the mail - please check the recipients mailboxes');
 		} else {
 			$_mailer->signal(TT_WARNING, $msg);
 			$returnCodes[] = array(TTK_RESULT_FAIL, 'Sending an email failed in step 1');
