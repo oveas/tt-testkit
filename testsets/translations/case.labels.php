@@ -48,9 +48,6 @@ class TTKTranslations_Labels implements TestCase
 	// Location of the label file
 	private $libLocation;
 
-	// Application code
-	private $applCode;
-
 	public function __construct()
 	{
 		$this->details = '';
@@ -58,20 +55,20 @@ class TTKTranslations_Labels implements TestCase
 		$this->checked = array();
 
 		$this->topLocation = TTKTranslations_topLocation();
-		$this->libLocation = TTKTranslations_libLocation();
-		$this->applCode = TTKTranslations_applicCode();
 	}
 
-	public function prepareTest ()
+	private function loadLabels($_appCode)
 	{
-		// Load messages
+		// Load labels
+		$this->libLocation = TTKTranslations_libLocation($_appCode);
+		$_appCode = strtolower($_appCode);
 		$_lang = ConfigHandler::get ('locale', 'lang');
-		if (file_exists ($this->libLocation . '/' . $this->applCode . '.labels.' . $_lang . '.php')) {
-			$file = $this->libLocation . '/' . $this->applCode . '.labels.' . $_lang . '.php';
-		} elseif (file_exists ($this->libLocation . '/' . $this->applCode . '.labels.php')) {
-			$file = $this->libLocation . '/' . $this->applCode . '.labels.php';
+		if (file_exists ($this->libLocation . '/' . $_appCode . '.labels.' . $_lang . '.php')) {
+			$file = $this->libLocation . '/' . $_appCode . '.labels.' . $_lang . '.php';
+		} elseif (file_exists ($this->libLocation . '/' . $_appCode . '.labels.php')) {
+			$file = $this->libLocation . '/' . $_appCode . '.labels.php';
 		} else {
-			return 'No label file found for language code ' . $_lang . ' and the default file is missing';
+			return 'No label file found for application ' . $_appCode . ' . language code ' . $_lang . ' and the default file is missing';
 		}
 		$this->details .= 'Checking label file ' . $file . '<br/>';
 
@@ -80,14 +77,28 @@ class TTKTranslations_Labels implements TestCase
 		}
 
 		while (($line = fgets($mFile, 1024)) !== false) {
+			$line = preg_replace('/\/\/.*/', '', $line);
 			// TODO I'ld prefer to use backrefs, but somehow the following won't find matches:
-//			if (preg_match("/\s+,?\s+('|\")(.*?)(\1)\s+=>\s+('|\")(.*?)(\4)/i", $line, $match)) {
+			//			if (preg_match("/\s+,?\s+('|\")(.*?)(\1)\s+=>\s+('|\")(.*?)(\4)/i", $line, $match)) {
 			if (preg_match("/\s+,?\s*('|\")(.*?)('|\")\s+=>\s+('|\")(.*?)('|\")/i", $line, $match)) {
 				$this->labels[$match[2]] = $match[5];
 			}
 		}
 		fclose($mFile);
 
+		return TTK_RESULT_SUCCESS;
+	}
+
+	public function prepareTest ()
+	{
+		$_form = TT::factory('FormHandler');
+
+		$_appCodes = $_form->get('appcodes');
+		foreach ($_appCodes as $_app) {
+			if (($_status = $this->loadLabels($_app)) !== TTK_RESULT_SUCCESS) {
+				return $_status;
+			}
+		}
 		return TTK_RESULT_SUCCESS;
 	}
 

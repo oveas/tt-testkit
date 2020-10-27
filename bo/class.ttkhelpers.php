@@ -38,7 +38,7 @@ abstract class TTKHelpers
 	 */
 	static public function compareTable($expected, $actual)
 	{
-		$table = new Container('table', '', array('style'=>'border: 1px; width: 100%;'));
+		$table = new Container('table', array('style'=>'border: 1px; width: 100%;'));
 
 		$hdrRow = $table->addContainer('row');
 		$hdrRow->setHeader();

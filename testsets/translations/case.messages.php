@@ -48,9 +48,6 @@ class TTKTranslations_Messages implements TestCase
 	// Location of the message file
 	private $libLocation;
 
-	// Application code
-	private $applCode;
-
 	public function __construct()
 	{
 		$this->details = '';
@@ -62,19 +59,20 @@ class TTKTranslations_Messages implements TestCase
 
 		$this->topLocation = TTKTranslations_topLocation();
 		$this->libLocation = TTKTranslations_libLocation();
-		$this->applCode = TTKTranslations_applicCode();
 	}
 
-	public function prepareTest ()
+	private function loadMessages($_appCode)
 	{
 		// Load messages
+		$this->libLocation = TTKTranslations_libLocation($_appCode);
+		$_appCode = strtolower($_appCode);
 		$_lang = ConfigHandler::get ('locale', 'lang');
-		if (file_exists ($this->libLocation . '/' . $this->applCode . '.messages.' . $_lang . '.php')) {
-			$file = $this->libLocation . '/' . $this->applCode . '.messages.' . $_lang . '.php';
-		} elseif (file_exists ($this->libLocation . '/' . $this->applCode . '.messages.php')) {
-			$file = $this->libLocation . '/' . $this->applCode . '.messages.php';
+		if (file_exists ($this->libLocation . '/' . $_appCode . '.messages.' . $_lang . '.php')) {
+			$file = $this->libLocation . '/' . $_appCode . '.messages.' . $_lang . '.php';
+		} elseif (file_exists ($this->libLocation . '/' . $_appCode . '.messages.php')) {
+			$file = $this->libLocation . '/' . $_appCode . '.messages.php';
 		} else {
-			return 'No message file found for language code ' . $_lang . ' and the default file is missing';
+			return 'No message file found for application ' . $_appCode . ', language code ' . $_lang . ' and the default file is missing';
 		}
 		$this->details .= 'Checking message file ' . $file . '<br/>';
 
@@ -83,11 +81,25 @@ class TTKTranslations_Messages implements TestCase
 		}
 
 		while (($line = fgets($mFile, 1024)) !== false) {
+			$line = preg_replace('/\/\/.*/', '', $line);
 			if (preg_match("/\s+,?\s*'([A-Z_]*)'\s+=>\s+'(.*?)'/i", $line, $match)) {
 				$this->messages[$match[1]] = $match[2];
 			}
 		}
 		fclose($mFile);
+		return TTK_RESULT_SUCCESS;
+	}
+
+	public function prepareTest ()
+	{
+		$_form = TT::factory('FormHandler');
+
+		$_appCodes = $_form->get('appcodes');
+		foreach ($_appCodes as $_app) {
+			if (($_status = $this->loadMessages($_app)) !== TTK_RESULT_SUCCESS) {
+				return $_status;
+			}
+		}
 		return TTK_RESULT_SUCCESS;
 	}
 
@@ -146,7 +158,7 @@ class TTKTranslations_Messages implements TestCase
 				$this->statusCodes['statusReg'][$matches[1]] = 1;
 				if (!array_key_exists($matches[1], $this->messages)) {
 					$this->returnCodes[] = array(TTK_RESULT_FAIL, "Message code $matches[1] does not appear in a message in file $file on line $lineCounter");
-				} elseif ($this->messages[$matches[1]] == '') {
+				} elseif (!array_key_exists($matches[1], $this->messages)) {
 					$this->returnCodes[] = array(TTK_RESULT_WARNING, "Message code $matches[1] has no text in file $file on line $lineCounter");
 				}
 			}

@@ -34,23 +34,16 @@ function TTKTranslations_topLocation ()
 }
 
 /**
- * Return the loation for lib files. This is in a seperate function so it easier to perform this
- * test for another application (but still the change must be made manually in the code!)
+ * Return the location for lib files for the given application code
+ * \param[in] $_appCode Application code
  * \return Library location
  * \author Oscar van Eijk, Oveas Functionality Provider
  */
-function TTKTranslations_libLocation ()
+function TTKTranslations_libLocation ($_appCode)
 {
-	return TT_LIBRARY;
-}
-
-/**
- * Return the application to check. This is in a seperate function so it easier to perform this
- * test for another application (but still the change must be made manually in the code!)
- * \return Toplevel of te application
- * \author Oscar van Eijk, Oveas Functionality Provider
- */
-function TTKTranslations_applicCode ()
-{
-	return 'tt';
+	if ($_appCode == TT_CODE) {
+		return TT_LIBRARY;
+	} else {
+		return TT_APPS_ROOT . '/' . strtolower($_appCode) . '/lib';
+	}
 }

@@ -22,20 +22,14 @@
  * along with TTK. If not, see http://www.gnu.org/licenses/.
  */
 
-/*
- * Register this class and all status codes
- */
-Register::registerApp (TTloader::getCurrentAppName(), 0x02000000);
-
-// Set up the label translations
-Register::registerLabels();
-
-
 /**
  * \name Global constants
  * These constants are used TT Test Kit wide
  * @{
  */
+//! TT Test Kit Application name
+define ('TTK_APPNAME', TTloader::getCurrentAppName());
+
 //! TT Test Kit business objects
 define ('TTK_BO', TTloader::getCurrentAppUrl() . '/bo');
 
@@ -51,6 +45,14 @@ define ('TTK_CSS', TTloader::getCurrentAppUrl() . '/css');
 //! Location of all testsets
 define ('TTK_TESTSETS', TTloader::getCurrentAppUrl() . '/testsets');
 //! @}
+
+/*
+ * Register this class and all status codes
+ */
+Register::registerApp (TT_APPNAME, 0x1ef, 0x2);
+
+// Set up the label translations
+Register::registerLabels();
 
 if (!TTloader::getClass('ttkuser', TTK_BO)) {
 	trigger_error('Error loading classfile TTKUser from '. TTK_BO, E_USER_ERROR);

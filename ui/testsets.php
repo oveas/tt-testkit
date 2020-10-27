@@ -55,7 +55,7 @@ class TestsetsArea extends ContentArea
 			)
 		);
 
-		$_table = new Container('table', '', array('style'=>'border: 0px;'));
+		$_table = new Container('table', array('style'=>'border: 0px;'));
 
 		$this->testKit = TT::factory('testkit', TTK_SO);
 		$_sets = $this->testKit->getTestSets();
@@ -65,7 +65,8 @@ class TestsetsArea extends ContentArea
 			$_fld = $_form->addField('checkbox', "set[$_name]", 1);
 			$_row->addContainer('cell', $_form->showField("set[$_name]"));
 			$_lbl = $_class::getDescription() . '<br/>';
-			$_cntnr = new Container('label', $_lbl, array(), array('for' => &$_fld));
+			$_cntnr = new Container('label', array(), array('for' => &$_fld));
+			$_cntnr->setContent($_lbl);
 			$_cell = $_row->addContainer('cell');
 			$_cell->setContent($_cntnr);
 			$_class::getAdditionalData($_table, $_form);
@@ -80,15 +81,12 @@ class TestsetsArea extends ContentArea
 			,array('colspan'=>2)
 		);
 
-		$_fldSet = new Container(
-			 'fieldset'
-			,$_table->showElement()
-			,array()
-		);
+		$_fldSet = new Container('fieldset');
+		$_fldSet->setContent($_table);
 		$_fldSet->addContainer('legend', $this->trn('Available testsets'));
 		$_form->addToContent($_fldSet);
 
-		$this->contentObject = new Container('div', '', array('class' => 'testArea'));
+		$this->contentObject = new Container('div', array('class' => 'testArea'));
 		$this->contentObject->addToContent($_form);
 	}
 }

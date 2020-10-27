@@ -22,6 +22,10 @@
  */
 
 $_labels = array (
-	 'Available testsets' => 'Available testsets'
-	,'Start tests' => 'Start tests'
+	 'Actual result'		=> 'Actual result'
+	,'Available testsets'	=> 'Available testsets'
+	,'Details'				=> 'Details'
+	,'Expected result'		=> 'Expected result'
+	,'Start tests'			=> 'Start tests'
+	,'Testkit'				=> 'Testkit'
 );

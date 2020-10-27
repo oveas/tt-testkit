@@ -36,4 +36,28 @@ class TTKTranslations extends TestSet
 		return 'Not really a testset, but a check to see if all registered message codes '
 			. 'and labels are in the message- and label files.';
 	}
+
+	static public function getAdditionalData($table, $form)
+	{
+		$_row = $table->addContainer('row');
+		$_cell = $_row->addContainer('cell');
+
+		$_fld = $form->addField('select', 'appcodes');
+		$_fld->setMultiple(true);
+		$_apps = getApplications();
+		$_opts = array();
+		foreach ($_apps as $_app) {
+			$_opts[] = array('value' => $_app['code'], 'text' => $_app['description'], 'selected' => true);
+		}
+		$_fld->setValue($_opts);
+//		print_r($_apps);
+		$_lbl = ContentArea::translate('Application(s):');
+		$_cntnr = new Container('label', array('style' => 'display: block; float: left; width: 100px; vertical-align: top;'), array('for' => &$_fld));
+		$_cntnr->setContent($_lbl);
+		$_cell = $_row->addContainer('cell');
+		$_cell->setContent($_cntnr);
+		$_n = $form->showField('appcodes');
+		$_cell->addToContent($_n);
+	}
+
 }

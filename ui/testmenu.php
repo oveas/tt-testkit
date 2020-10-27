@@ -42,11 +42,12 @@ class TestmenuArea extends ContentArea
 		}
 		
 		// Create the container for menu items
-		$this->contentObject = new Container('menu', '', array('class' => 'mainMenu'));
+		$this->contentObject = new Container('menu', array('class' => 'mainMenu'));
 
 		// Home link
 		$_txt = $this->trn('Testkit');
-		$_lnk = new Container('link', $_txt);
+		$_lnk = new Container('link');
+		$_lnk->setContent($_txt);
 		$_lnk->setContainer(array(
 				'dispatcher' => array(
 						'application' => 'TTK'

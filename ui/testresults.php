@@ -63,18 +63,19 @@ class TestresultsArea extends ContentArea
 						$_class = 'resultSkipped';
 						break;
 				}
-				$_div = new Container('div', $_msg, array('class' => $_class));
+				$_div = new Container('div', array('class' => $_class));
+				$_div->setContent($_msg);
 				$_html .= $_div->showElement();
 			}
 		}
 		if ($arg['details']) {
-			$_div = new Container('div'
-				, '<h3>' . $this->trn('Details') . '</h3>' . $arg['details']
-				, array('class' => 'resultDetails')
-			);
+			$_div = new Container('div', array('class' => 'resultDetails'));
+			$_c = '<h3>' . $this->trn('Details') . '</h3>' . $arg['details'];
+			$_div->setContent($_c);
 			$_html .= $_div->showElement();
 		}
 
-		$this->contentObject = new Container('div', $_html, array('class' => 'testArea'));
+		$this->contentObject = new Container('div', array('class' => 'testArea'));
+		$this->contentObject->setContent($_html);
 	}
 }
