@@ -38,7 +38,6 @@ class TTKMaildriver_Sendmail implements TestCase
 
 	// Cc address
 	private $cc;
-
 	// Hold details of the testresults
 	private $details;
 
@@ -69,6 +68,14 @@ class TTKMaildriver_Sendmail implements TestCase
 		$_mailer->addTo($this->to);
 		$_mailer->addCc($this->cc);
 
+		$_form = TT::factory('FormHandler');
+		if ($_form->get('delnot') !== null) {
+			$_mailer->setOption(MAIL_OPT_DELIVERYNOTIFICATION);
+		}
+		if ($_form->get('readnot') !== null) {
+			$_mailer->setOption(MAIL_OPT_READNOTIFICATION);
+		}
+		
 		$step = 1;
 		$_mailer->setSubject("Testmail 1 from TTK");
 		$_mailer->setBody('This is the first testmail from the Terra-Terra testkit');

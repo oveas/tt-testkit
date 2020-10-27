@@ -45,6 +45,24 @@ class TTKMaildriver extends TestSet
 		self::getAddress($table, $form, 'Sender address', 'from');
 		self::getAddress($table, $form, 'Recipient 1 (To)', 'to');
 		self::getAddress($table, $form, 'Recipient 2 (Cc)', 'cc');
+
+		self::getOption($table, $form, 'Return a delivery notification', 'delnot');
+		self::getOption($table, $form, 'Request a read confirmation', 'readnot');
+	}
+
+	static private function getOption ($table, $form, $label, $name)
+	{
+		$_row = $table->addContainer('row');
+		$_cell = $_row->addContainer('cell');
+		
+		$_fld = $form->addField('checkbox', $name);
+		$_lbl = ContentArea::translate($label);
+		$_cntnr = new Container('label', array('style' => 'display: block; float: left; width: 100px'), array('for' => &$_fld));
+		$_cntnr->setContent($_lbl);
+		$_cell = $_row->addContainer('cell');
+		$_cell->setContent($_cntnr);
+		$_n = $form->showField($name);
+		$_cell->addToContent($_n, true);
 	}
 	
 	static private function getAddress ($table, $form, $label, $name)
@@ -54,12 +72,11 @@ class TTKMaildriver extends TestSet
 
 		$_fld = $form->addField('text', $name, '', array('size' => 50));
 		$_lbl = ContentArea::translate($label);
-//		$_lbl = $label;
-		$_cntnr = new Container('label', $_lbl, array('style' => 'display: block; float: left; width: 100px'), array('for' => &$_fld));
+		$_cntnr = new Container('label', array('style' => 'display: block; float: left; width: 100px'), array('for' => &$_fld));
+		$_cntnr->setContent($_lbl);
 		$_cell = $_row->addContainer('cell');
 		$_cell->setContent($_cntnr);
-		$_cell->addToContent($form->showField($name));
-		
-//		$_row->addContainer('cell', $form->showField($name));
+		$_n = $form->showField($name);
+		$_cell->addToContent($_n);
 	}
 }
