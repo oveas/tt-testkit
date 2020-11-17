@@ -58,7 +58,6 @@ class TTKTranslations_Messages implements TestCase
 		);
 
 		$this->topLocation = TTKTranslations_topLocation();
-		$this->libLocation = TTKTranslations_libLocation();
 	}
 
 	private function loadMessages($_appCode)
