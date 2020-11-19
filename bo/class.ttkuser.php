@@ -53,7 +53,7 @@ class TTKUser extends User
 		}
 		return TTKUser::$instance;
 	}
-	
+
 	/**
 	 * Show the main options
 	 */
@@ -63,14 +63,43 @@ class TTKUser extends User
 			$_mnu->addToDocument(TTCache::get(TTCACHE_OBJECTS, 'mainMenuContainer'));
 		}
 	}
-	
+
 	/**
 	 * Display the page with testoptions
-	 * TODO Yet to be created!!
 	 */
 	public function showTestOpts ()
 	{
 		require (TTK_SO . '/class.testkit.php');
 		TT::factory('Dispatcher')->dispatch('TTK#TTK_BO#ttk#TTK#selectTestCases');
+	}
+
+	/**
+	 * Perform all container tests.
+	 * This test calls the Container tests directly. Containertests are located in the container directory
+	 * in TTK_TESTSETS and have the name 'ct.&gt;containerName&lt;.php.
+	 */
+	public function performContainerTests ()
+	{
+		if (!TTloader::getInterface('Containertest', TTK_TESTSETS . '/container')) {
+			trigger_error('Error loading the Containertest class', E_USER_ERROR);
+		}
+		$testResults = array('containerTest' => true, 'result' => array());
+
+		if ($dH = opendir(TTK_TESTSETS . '/container')) {
+			while (($fName = readdir($dH)) !== false) {
+				if ($fName != '.' && $fName != '..' && !is_dir(TTK_TESTSETS . '/container/' . $fName)) {
+					if (preg_match('/ct\.(\w*)\.php/', $fName, $_matches)) {
+						$_className = ucfirst($_matches[1]);
+						$_testCase = 'containertest' . $_className;
+						require(TTK_TESTSETS . '/container/' . $fName);
+						$testResults['result'][$_className] = array($_testCase::describeResult(), $_testCase::testContainer());
+					}
+				}
+			}
+			$_area = TTloader::getArea('testresults', TTK_UI, $testResults);
+			$_area->addToDocument();
+		}
+		closedir($dH);
+
 	}
 }

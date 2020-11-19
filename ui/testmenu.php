@@ -40,7 +40,7 @@ class TestmenuArea extends ContentArea
 		if ($this->hasRight('executetest', TTloader::getTTId('TTK')) === false) {
 			return false;
 		}
-		
+
 		// Create the container for menu items
 		$this->contentObject = new Container('menu', array('class' => 'mainMenu'));
 
@@ -55,6 +55,21 @@ class TestmenuArea extends ContentArea
 						,'class_file' => 'ttkuser'
 						,'class_name' => 'TTKUser'
 						,'method_name' => 'showTestOpts'
+				)
+			)
+		);
+		$this->contentObject->addContainer('item', $_lnk);
+
+		$_txt = $this->trn('Container tests');
+		$_lnk = new Container('link');
+		$_lnk->setContent($_txt);
+		$_lnk->setContainer(array(
+				'dispatcher' => array(
+					'application' => 'TTK'
+					,'include_path' => 'TTK_BO'
+					,'class_file' => 'ttkuser'
+					,'class_name' => 'TTKUser'
+					,'method_name' => 'performContainerTests'
 				)
 			)
 		);
